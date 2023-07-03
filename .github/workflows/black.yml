@@ -1,25 +1,12 @@
-name: Black
+stages:
+  - linting
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  black:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-
-      - name: Install dependencies
-        run: pip install black
-
-      - name: Run Black
-        run: black .
+black:
+  stage: linting
+  image: python:3.9
+  before_script:
+    - pip install black
+  script:
+    - black --check .
+  only:
+    - master
