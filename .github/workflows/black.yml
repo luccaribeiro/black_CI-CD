@@ -9,4 +9,4 @@ black:
   script:
     - black --check .
   only:
-    - master
+    - main
