@@ -1,12 +1,25 @@
-stages:
-  - linting
+name: Format Check
 
-black:
-  stage: linting
-  image: python:3.9
-  before_script:
-    - pip install black
-  script:
-    - black --check .
-  only:
-    - main
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: pip install black
+
+    - name: Check code formatting
+      run: black --check .
+
+    - name: Report status
+      run: echo "Code formatting check complete"
